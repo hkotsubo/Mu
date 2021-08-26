@@ -17,6 +17,7 @@ public class EvalVisitor extends MuBaseVisitor<Value> {
         memory.put("VAR@TEST", new Value(15.0));
         memory.put("PAR@TEST2", new Value(10.0));
         memory.put("BAS@TEST3", new Value(3.0));
+        memory.put("PAR@TEST4", new Value(5.0));
     }
 
     @Override
@@ -29,6 +30,7 @@ public class EvalVisitor extends MuBaseVisitor<Value> {
     public Value visitIdAtom(MuParser.IdAtomContext ctx) {
         String id = ctx.getText();
         if (memory.containsKey(id)) {
+            System.out.println("Obter valor de " + id);
             return memory.get(id);
         }
         return Value.VOID;
@@ -136,7 +138,9 @@ public class EvalVisitor extends MuBaseVisitor<Value> {
     @Override
     public Value visitOrExpr(MuParser.OrExprContext ctx) {
         Value left = this.visit(ctx.expr(0));
-        Value right = this.visit(ctx.expr(1));
-        return new Value(left.asBoolean() || right.asBoolean());
+        if (left.asBoolean()) { // se o primeiro é verdadeiro, não precisa avaliar o segundo
+            return new Value(true);
+        }
+        return new Value(this.visit(ctx.expr(1)).asBoolean());
     }
 }
