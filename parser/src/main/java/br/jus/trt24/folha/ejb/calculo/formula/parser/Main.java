@@ -13,6 +13,7 @@ public class Main {
             args = new String[]{"src/main/mu/test.mu"};
         }
         String formula = "VAR@AUXILIO_TRANSPORTE_MAIOR_65_ANOS == 0 ? 10 : VAR@VAR_REF_INDEN_TRANSP_MES_ANT > 0 ? 20 : VAR@TEM_AUX_TRANSP == 0 ? 30 : 22 - VAR@QTDE_DIAS_DESC_AUX_TRANSP";
+        formula = "1 + 2 > 4 ? 5 : 3 - 7 < 0 ? 2 * -7 : 3 * 13";
 
         //FormulaRubricaLexer lexer = new FormulaRubricaLexer(new ANTLRFileStream(args[0]));
         FormulaRubricaLexer lexer = new FormulaRubricaLexer(new ANTLRInputStream(formula));

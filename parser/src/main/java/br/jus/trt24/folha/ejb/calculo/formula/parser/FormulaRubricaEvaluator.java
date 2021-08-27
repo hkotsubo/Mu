@@ -16,7 +16,7 @@ public class FormulaRubricaEvaluator extends FormulaRubricaBaseVisitor<FormulaRu
         cache.put("VAR@QTDE_DIAS_DESC_AUX_TRANSP", new FormulaRubricaValue(9));
     }
 
-    Map<String, FormulaRubricaValue> getVars() {
+    public Map<String, FormulaRubricaValue> getVars() {
         return this.cache;
     }
 
@@ -30,7 +30,6 @@ public class FormulaRubricaEvaluator extends FormulaRubricaBaseVisitor<FormulaRu
     public FormulaRubricaValue visitIdAtom(FormulaRubricaParser.IdAtomContext ctx) {
         String id = ctx.getText();
         if (cache.containsKey(id)) {
-            System.out.println("Obter valor de " + id);
             return cache.get(id);
         }
         return new FormulaRubricaValue(false);
