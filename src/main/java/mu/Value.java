@@ -1,53 +1,79 @@
 package mu;
 
+import java.math.BigDecimal;
+
 public class Value {
 
-    public static Value VOID = new Value(new Object());
+    // valor pode ser um booleano ou um número: se número é null, então é booleano
+    private final boolean bool;
+    private final BigDecimal number;
 
-    final Object value;
-
-    public Value(Object value) {
-        this.value = value;
+    public Value(boolean bool) {
+        this(bool, null);
     }
 
-    public Boolean asBoolean() {
-        return (Boolean) value;
+    public Value(double d) {
+        this(false, BigDecimal.valueOf(d));
     }
 
-    public Double asDouble() {
-        return (Double) value;
+    public Value(BigDecimal number) {
+        this(false, number);
     }
 
-    public String asString() {
-        return String.valueOf(value);
+    private Value(boolean bool, BigDecimal number) {
+        this.bool = bool;
+        this.number = number;
     }
 
-    public boolean isDouble() {
-        return value instanceof Double;
+    public Boolean booleanValue() {
+        return this.bool;
+    }
+
+    public BigDecimal numberValue() {
+        return this.number;
+    }
+
+    public boolean isNumber() {
+        return this.number != null;
     }
 
     @Override
     public int hashCode() {
-        if (value == null) {
-            return 0;
+        if (this.isNumber()) {
+            return this.number.hashCode();
         }
-        return this.value.hashCode();
+        return Boolean.hashCode(this.bool);
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (value == o) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
             return true;
         }
-        if (value == null || o == null || o.getClass() != value.getClass()) {
+        if (obj == null) {
             return false;
         }
-        Value that = (Value) o;
-        return this.value.equals(that.value);
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+
+        final Value other = (Value) obj;
+        boolean thisIsDouble = this.isNumber();
+        boolean otherIsDouble = other.isNumber();
+        if (thisIsDouble != otherIsDouble) {
+            return false;
+        }
+        if (thisIsDouble) {
+            return this.number.equals(other.number);
+        }
+        return this.bool == other.bool;
     }
 
     @Override
     public String toString() {
-        return String.valueOf(value);
+        if (this.isNumber()) {
+            return String.valueOf(this.number);
+        }
+        return String.valueOf(this.bool);
     }
 }

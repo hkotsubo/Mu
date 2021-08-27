@@ -1,6 +1,6 @@
 package mu;
 
-import org.antlr.v4.runtime.ANTLRFileStream;
+import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 
@@ -13,7 +13,8 @@ public class Main {
 
         System.out.println("parsing: " + args[0]);
 
-        MuLexer lexer = new MuLexer(new ANTLRFileStream(args[0]));
+        //MuLexer lexer = new MuLexer(new ANTLRFileStream(args[0]));
+        MuLexer lexer = new MuLexer(new ANTLRInputStream("( BAS@BASE_PSSS < VAR@VAR_TETO_INSS ) ? ( BAS@BASE_PSSS - VAR@VAR_TETO_INSS ) : 0"));
         MuParser parser = new MuParser(new CommonTokenStream(lexer));
         ParseTree tree = parser.parse();
         System.out.println(tree.toStringTree(parser));
