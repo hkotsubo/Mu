@@ -1,26 +1,26 @@
-package mu;
+package br.jus.trt24.folha.ejb.calculo.formula.parser;
 
 import java.math.BigDecimal;
 
-public class Value {
+public class FormulaRubricaValue {
 
     // valor pode ser um booleano ou um número: se número é null, então é booleano
     private final boolean bool;
     private final BigDecimal number;
 
-    public Value(boolean bool) {
+    public FormulaRubricaValue(boolean bool) {
         this(bool, null);
     }
 
-    public Value(double d) {
+    public FormulaRubricaValue(double d) {
         this(false, BigDecimal.valueOf(d));
     }
 
-    public Value(BigDecimal number) {
+    public FormulaRubricaValue(BigDecimal number) {
         this(false, number);
     }
 
-    private Value(boolean bool, BigDecimal number) {
+    private FormulaRubricaValue(boolean bool, BigDecimal number) {
         this.bool = bool;
         this.number = number;
     }
@@ -57,7 +57,7 @@ public class Value {
             return false;
         }
 
-        final Value other = (Value) obj;
+        final FormulaRubricaValue other = (FormulaRubricaValue) obj;
         boolean thisIsDouble = this.isNumber();
         boolean otherIsDouble = other.isNumber();
         if (thisIsDouble != otherIsDouble) {
