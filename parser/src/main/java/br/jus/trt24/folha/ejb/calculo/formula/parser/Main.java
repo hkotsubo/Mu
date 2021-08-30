@@ -21,7 +21,8 @@ public class Main {
         ParseTree tree = parser.parse();
         System.out.println(tree.toStringTree(parser));
         FormulaRubricaEvaluator evaluator = new FormulaRubricaEvaluator();
-        System.out.println("result=" + evaluator.visit(tree));
+        FormulaRubricaValue resultEval = evaluator.visit(tree);
+        System.out.println("result=" + resultEval);
 
         // comparar com a engine atual
         RhinoScriptEngine engine = new RhinoScriptEngine();
@@ -29,6 +30,10 @@ public class Main {
         for (Map.Entry<String, FormulaRubricaValue> e : vars.entrySet()) {
             formula = formula.replaceAll(e.getKey(), e.getValue().toString());
         }
-        System.out.println("result=" + engine.eval(formula));
+        Object resultRhino = engine.eval(formula);
+        System.out.println("result=" + resultRhino);
+
+        // compara resultados considerando uma margem de erro "pequena o suficiente"
+        System.out.println(Math.abs(((Double) resultRhino) - (resultEval.numberValue().doubleValue())) < 0.00001);
     }
 }

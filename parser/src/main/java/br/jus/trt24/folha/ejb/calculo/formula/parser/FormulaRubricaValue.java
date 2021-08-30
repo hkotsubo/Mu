@@ -13,7 +13,7 @@ public class FormulaRubricaValue {
     }
 
     public FormulaRubricaValue(double d) {
-        this(false, BigDecimal.valueOf(d));
+        this(false, new BigDecimal(d));
     }
 
     public FormulaRubricaValue(BigDecimal number) {

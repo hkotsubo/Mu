@@ -5,7 +5,7 @@ parse
  ;
 
 expr
- : MINUS expr                            #unaryMinusExpr
+ : (PLUS | MINUS) expr                   #unaryMinusExpr
  | expr op=(MULT | DIV) expr             #multiplicationExpr
  | expr op=(PLUS | MINUS) expr           #additiveExpr
  | expr op=(LTEQ | GTEQ | LT | GT) expr  #relationalExpr
@@ -40,18 +40,6 @@ CPAR : ')';
 THEN: '?';
 ELSE: ':';
 
-VARIAVELD: 'VARD';
-VARIAVEL: 'VAR';
-PARAMETRO: 'PAR';
-BASECALCULO: 'BAS';
-
-PREFIXO: (VARIAVELD | VARIAVEL | PARAMETRO | BASECALCULO);
-SUFIXO: [a-zA-Z_]+ [a-zA-Z_0-9]* ;
-
-ID
- : PREFIXO '@' SUFIXO
- ;
-
 INT
  : [0-9]+
  ;
@@ -65,3 +53,14 @@ SPACE
  : [ \t\r\n] -> skip
  ;
 
+VARIAVELD: 'VARD';
+VARIAVEL: 'VAR';
+PARAMETRO: 'PAR';
+BASECALCULO: 'BAS';
+
+PREFIXO: (VARIAVELD | VARIAVEL | PARAMETRO | BASECALCULO);
+SUFIXO: [a-zA-Z_0-9]+;
+
+ID
+ : PREFIXO '@' SUFIXO
+ ;
